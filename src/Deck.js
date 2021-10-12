@@ -34,6 +34,7 @@ function Deck() {
                     id: card.code,
                     image: card.image,
                     name: `${card.value} of ${card.suit}`,
+                    rotate: animateCard(),
                 },
             ]);
         } catch (error) {
@@ -42,14 +43,22 @@ function Deck() {
     };
 
     const cards = drawn.map((c) => (
-        <Card key={c.id} name={c.name} image={c.image} />
+        <Card key={c.id} name={c.name} image={c.image} rotate={c.rotate} />
     ));
+
+    const animateCard = () => {
+        let angle = Math.random() * 90 - 45;
+        let xPos = Math.random() * 40 - 20;
+        let yPos = Math.random() * 40 - 20;
+        let rotate = `translate(${xPos}px, ${yPos}px) rotate(${angle}deg)`;
+        return rotate;
+    };
 
     return (
         <div className="App">
             <h1>Card Dealer</h1>
             <button onClick={() => getCard()}>Gimme a card</button>
-            {cards}
+            <div className="Deck-cardarea">{cards}</div>
         </div>
     );
 }
