@@ -4,6 +4,7 @@ import "./App.css";
 
 function App() {
     const [deck, setDeck] = useState(null);
+    const [drawn, setDrawn] = useState({});
 
     const API_BASE_URL = "https://deckofcardsapi.com/api/deck";
 
@@ -17,11 +18,23 @@ function App() {
     }, []);
 
     const getCard = async () => {
-        let id = deck.deck_id;
-        let cardUrl = `${API_BASE_URL}/${id}/draw/`;
-        let cardRes = await axios.get(cardUrl);
-        console.log(cardRes.data);
-        let card = cardRes.data.cards[0];
+        let deck_id = deck.deck_id;
+        try {
+            let cardUrl = `${API_BASE_URL}/${deck_id}/draw/`;
+            let cardRes = await axios.get(cardUrl);
+            if (cardRes.data.remaining === 0) {
+                throw new Error("No cards");
+            }
+            console.log(cardRes.data);
+            let card = cardRes.data.cards[0];
+            setDrawn({
+                id: card.code,
+                image: card.image,
+                name: `${card.value} of ${card.suit}`,
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
