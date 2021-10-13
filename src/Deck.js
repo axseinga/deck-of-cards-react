@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./Card";
-import "./App.css";
+import "./Deck.css";
 
 function Deck() {
     const [deck, setDeck] = useState(null);
@@ -56,8 +56,11 @@ function Deck() {
 
     return (
         <div className="App">
-            <h1>Card Dealer</h1>
-            <button onClick={() => getCard()}>Gimme a card</button>
+            <h1 className="Deck-heading">Card Dealer</h1>
+            <p>An app created with React Hooks</p>
+            <button className="Deck-button" onClick={() => getCard()}>
+                Gimme a card
+            </button>
             <div className="Deck-cardarea">{cards}</div>
         </div>
     );
